@@ -6,13 +6,14 @@ import com.example.bookStore.model.Users;
 import com.example.bookStore.repository.RolesRepository;
 import com.example.bookStore.repository.UsersRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+//@RestControllerAdvice
 @Component
 public class UserToolBox {
     public final UsersRepository usersRepository;

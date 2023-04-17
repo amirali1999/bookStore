@@ -7,7 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
+@RestController
+@RequestMapping(path = "user")
 public class UsersController {
     private final UsersService usersService;
 

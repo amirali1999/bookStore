@@ -12,9 +12,10 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UsersService {
     private final MessageSource messageSource;
     private final UserToolBox userToolBox;

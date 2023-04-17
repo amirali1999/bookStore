@@ -10,7 +10,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RolesService {
     private final RolesRepository rolesRepository;
     private final MessageSource messageSource;

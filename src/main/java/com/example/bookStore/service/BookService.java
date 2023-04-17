@@ -12,10 +12,11 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-
+@Service
 public class BookService {
     private final BookRepository bookRepository;
     private final MessageSource messageSource;
@@ -37,7 +38,7 @@ public class BookService {
     }
 
     public Response getBooksByTitle(int page, String title){
-        Page<List<Book>> pages = bookRepository.findByTitle(title, PageRequest.of(page - 1, 10));
+        Page<List<Book>> pages = bookRepository.findByTitleContains(title, PageRequest.of(page - 1, 10));
         return new Response(HttpStatus.OK,
                 messageSource.getMessage("get.role.successfully",
                         null,
@@ -48,9 +49,9 @@ public class BookService {
     }
 
     public Response getBooksByAuthor(int page, String author){
-        Page<List<Book>> pages = bookRepository.findByAuthor(author, PageRequest.of(page - 1, 10));
+        Page<List<Book>> pages = bookRepository.findByAuthorContains(author, PageRequest.of(page - 1, 10));
         return new Response(HttpStatus.OK,
-                messageSource.getMessage("get.role.successfully",
+                messageSource.getMessage("get.book.successfully",
                         null,
                         LocaleContextHolder.getLocale()
                 ),
@@ -59,7 +60,7 @@ public class BookService {
     }
 
     public Response getBooksByPublisher(int page, String publisher){
-        Page<List<Book>> pages = bookRepository.findByPublisher(publisher, PageRequest.of(page - 1, 10));
+        Page<List<Book>> pages = bookRepository.findByPublisherContains(publisher, PageRequest.of(page - 1, 10));
         return new Response(HttpStatus.OK,
                 messageSource.getMessage("get.role.successfully",
                         null,
@@ -76,7 +77,7 @@ public class BookService {
         if(bookRequest.getAuthor().isEmpty()){
             throw new EmptyFieldException("Author field is empty");
         }
-        if(!bookRepository.findByTitle(bookRequest.getTitle()).isEmpty()){
+        if(bookRepository.findByTitle(bookRequest.getTitle()).isPresent()){
             throw new DuplicateFieldException("Title is duplicate");
         }
         Book book = new Book(bookRequest);
@@ -106,7 +107,7 @@ public class BookService {
         Book book = bookRepository.findById(id).orElseThrow(() -> new InvalidIdException("Id not found"));
         Book new_book = new Book(bookRequest);
         if(new_book.getTitle() != null &&!Objects.equals(book.getTitle(), new_book.getTitle())){
-            if(!bookRepository.findByTitle(new_book.getTitle()).isEmpty()){
+            if(bookRepository.findByTitle(new_book.getTitle()).isPresent()){
                 throw new DuplicateFieldException("Title is duplicate");
             }
             book.setTitle(new_book.getTitle());

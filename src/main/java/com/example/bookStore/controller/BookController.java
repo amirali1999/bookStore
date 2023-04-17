@@ -7,7 +7,7 @@ import com.example.bookStore.request.BookRequest;
 import com.example.bookStore.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@RestController
 @RequestMapping(path = "book")
 public class BookController {
     private final BookService bookService;
@@ -16,24 +16,24 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(path = "getAll")
+    @GetMapping(path = "getall/{page}")
     public ResponseEntity<?> getAllBook(@PathVariable("page") int page){
         return bookService.getAllBook(page).createResponseEntity();
     }
 
-    @GetMapping(path = "getAll/{page}/{title}")
+    @GetMapping(path = "getallbytitle/{page}/{title}")
     public ResponseEntity<?> getBooksByTitle(@PathVariable("page") int page,
                                              @PathVariable("title") String title){
         return bookService.getBooksByTitle(page,title).createResponseEntity();
     }
 
-    @GetMapping(path = "getAll/{page}/{author}")
+    @GetMapping(path = "getallbyauthor/{page}/{author}")
     public ResponseEntity<?> getBooksByAuthor(@PathVariable("page") int page,
                                               @PathVariable("author") String author){
         return bookService.getBooksByAuthor(page,author).createResponseEntity();
     }
 
-    @GetMapping(path = "getAll/{page}/{publisher}")
+    @GetMapping(path = "getallbypublisher/{page}/{publisher}")
     public ResponseEntity<?> getBooksByPublisher(@PathVariable("page") int page,
                                                  @PathVariable("publisher") String publisher){
         return bookService.getBooksByPublisher(page,publisher).createResponseEntity();
