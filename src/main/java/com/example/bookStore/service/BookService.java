@@ -102,7 +102,7 @@ public class BookService {
                 book,
                 1);
     }
-
+    //TODO fix this FUCKING api
     public Response patchBook(long id, BookRequest bookRequest) throws InvalidIdException, DuplicateFieldException {
         Book book = bookRepository.findById(id).orElseThrow(() -> new InvalidIdException("Id not found"));
         Book new_book = new Book(bookRequest);
@@ -114,12 +114,6 @@ public class BookService {
         }
         if(new_book.getAuthor() != null && !Objects.equals(book.getAuthor(), new_book.getAuthor())){
             book.setAuthor(new_book.getAuthor());
-        }
-        if(new_book.getImage_url_s() != null &&!Objects.equals(book.getImage_url_s(), new_book.getImage_url_s())){
-            book.setImage_url_s(new_book.getImage_url_s());
-        }
-        if(new_book.getIsbn() != 0 && !Objects.equals(book.getIsbn(), new_book.getIsbn())){
-            book.setIsbn(new_book.getIsbn());
         }
         if(new_book.getPublisher() != null &&!Objects.equals(book.getPublisher(), new_book.getPublisher())){
             book.setPublisher(new_book.getPublisher());

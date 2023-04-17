@@ -2,6 +2,7 @@ package com.example.bookStore.controller;
 
 import com.example.bookStore.exception.type.*;
 import com.example.bookStore.model.Users;
+import com.example.bookStore.request.UserRequest;
 import com.example.bookStore.service.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,10 @@ public class UsersController {
     }
 
     @PostMapping(path = "adduser")
-    public ResponseEntity<?> postUsers(@Valid @RequestBody Users users) throws InvalidCharacterException,
+    public ResponseEntity<?> postUsers(@Valid @RequestBody UserRequest userRequest) throws InvalidCharacterException,
             DuplicateFieldException, InvalidRolesException, InvalidPasswordException,
             InvalidLengthException, InvalidEmailException, EmptyFieldException {
-        return usersService.postUsers(users).createResponseEntity();
+        return usersService.postUsers(userRequest).createResponseEntity();
     }
 
     @DeleteMapping(path = "deleteuser")
@@ -40,10 +41,10 @@ public class UsersController {
 
     @PatchMapping(path = "updateuser/{usersname}")
     public ResponseEntity<?> patchUsers(@PathVariable("usersname") String usersName,
-                                        @Valid @RequestBody Users users) throws InvalidCharacterException,
+                                        @Valid @RequestBody UserRequest userRequest) throws InvalidCharacterException,
             InvalidGenderException, DuplicateFieldException, NotFoundException, InvalidPasswordException,
             InvalidLengthException, InvalidEmailException {
-        return usersService.patchUsers(users, usersName).createResponseEntity();
+        return usersService.patchUsers(userRequest, usersName).createResponseEntity();
     }
     @PostMapping(path = "add_book_to_user/{user_id}/{book_id}")
     public ResponseEntity<?> addBookToUser(@PathVariable("user_id") long user_id,

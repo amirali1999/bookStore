@@ -6,6 +6,7 @@ import com.example.bookStore.model.Book;
 import com.example.bookStore.model.Users;
 import com.example.bookStore.repository.BookRepository;
 import com.example.bookStore.repository.UsersRepository;
+import com.example.bookStore.request.UserRequest;
 import com.example.bookStore.response.Response;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -35,10 +36,10 @@ public class UsersService {
                 pages.get(),
                 pages.getTotalPages());
     }
-    public Response postUsers(Users users)
+    public Response postUsers(UserRequest userRequest)
             throws InvalidCharacterException, InvalidLengthException, InvalidPasswordException, EmptyFieldException,
             DuplicateFieldException, InvalidEmailException, InvalidRolesException {
-        users = userToolBox.toolBox(users);
+        Users users = userToolBox.toolBox(userRequest);
         usersRepository.save(users);
         return new Response(HttpStatus.OK,
                 messageSource.getMessage("add.user.successfully",
@@ -58,24 +59,24 @@ public class UsersService {
                 users,
                 1);
     }
-    public Response patchUsers(Users users, String usersName)
+    public Response patchUsers(UserRequest userRequest, String usersName)
             throws NotFoundException, DuplicateFieldException, InvalidCharacterException, InvalidLengthException,
             InvalidPasswordException, InvalidEmailException, InvalidGenderException {
         Users previousUsers = usersRepository.findByUsername(usersName)
                 .orElseThrow(() -> new NotFoundException("User not found!"));
-        if (users.getUsername() != null) {
-            userToolBox.checkDuplicateUsername(users.getUsername());
-            userToolBox.checkUsername(users.getUsername());
-            previousUsers.setUsername(users.getUsername());
+        if (userRequest.getUsername() != null) {
+            userToolBox.checkDuplicateUsername(userRequest.getUsername());
+            userToolBox.checkUsername(userRequest.getUsername());
+            previousUsers.setUsername(userRequest.getUsername());
         }
-        if (users.getPassword() != null) {
-            userToolBox.checkPassword(users.getPassword());
-            previousUsers.setPassword(users.getPassword());
+        if (userRequest.getPassword() != null) {
+            userToolBox.checkPassword(userRequest.getPassword());
+            previousUsers.setPassword(userRequest.getPassword());
         }
-        if (users.getEmail() != null) {
-            userToolBox.checkDuplicateEmail(users.getEmail());
-            userToolBox.checkEmail(users.getEmail());
-            previousUsers.setEmail(users.getEmail());
+        if (userRequest.getEmail() != null) {
+            userToolBox.checkDuplicateEmail(userRequest.getEmail());
+            userToolBox.checkEmail(userRequest.getEmail());
+            previousUsers.setEmail(userRequest.getEmail());
         }
         usersRepository.save(previousUsers);
         return new Response(HttpStatus.OK,

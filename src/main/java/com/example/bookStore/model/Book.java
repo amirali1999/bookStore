@@ -19,8 +19,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "isbn")
-    private int isbn;
     @Column(name = "title")
     private String title;
     @Column(name = "author")
@@ -29,22 +27,16 @@ public class Book {
     private int year_of_public;
     @Column(name = "publisher")
     private String publisher;
-    @Column(name = "image_url_s")
-    private String image_url_s;
-    public Book(int isbn, String title, String author, int year_of_public, String publisher, String image_url_s) {
-        this.isbn = isbn;
+    public Book(int isbn, String title, String author, int year_of_public, String publisher) {
         this.title = title;
         this.author = author;
         this.year_of_public = year_of_public;
         this.publisher = publisher;
-        this.image_url_s = image_url_s;
     }
     public Book(BookRequest bookRequest){
-        this.isbn = bookRequest.getIsbn();
         this.title = bookRequest.getTitle();
         this.author = bookRequest.getAuthor();
         this.year_of_public = bookRequest.getYear_of_public();
         this.publisher = bookRequest.getPublisher();
-        this.image_url_s = bookRequest.getImage_url_s();
     }
 }

@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 public class BookRequest {
-
-    private int isbn;
 
     private String title;
 
@@ -21,7 +17,4 @@ public class BookRequest {
     private int year_of_public;
 
     private String publisher;
-
-    private String image_url_s;
-
 }

@@ -3,8 +3,8 @@ package com.example.bookStore.controller;
 import com.example.bookStore.exception.type.DuplicateFieldException;
 import com.example.bookStore.exception.type.NotFoundException;
 import com.example.bookStore.model.Roles;
+import com.example.bookStore.request.RolesRequest;
 import com.example.bookStore.service.RolesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,8 @@ public class RolesController {
     }
 //    @PreAuthorize("hasAnyAuthority('admin')")
     @PostMapping(path = "addrole")
-    public ResponseEntity<?> postRoles(@Valid @RequestBody Roles roles) throws DuplicateFieldException {
+    public ResponseEntity<?> postRoles(@Valid @RequestBody RolesRequest rolesRequest) throws DuplicateFieldException {
+        Roles roles = new Roles(rolesRequest.getName(),rolesRequest.getDescription());
         return rolesService.postRoles(roles).createResponseEntity();
     }
 //    @PreAuthorize("hasAnyAuthority('admin')")

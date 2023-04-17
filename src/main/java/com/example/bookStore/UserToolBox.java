@@ -5,8 +5,8 @@ import com.example.bookStore.model.Roles;
 import com.example.bookStore.model.Users;
 import com.example.bookStore.repository.RolesRepository;
 import com.example.bookStore.repository.UsersRepository;
+import com.example.bookStore.request.UserRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,27 +24,28 @@ public class UserToolBox {
         this.rolesRepository = rolesRepository;
     }
 
-    public Users toolBox(Users users) throws EmptyFieldException, DuplicateFieldException, InvalidCharacterException,
+    public Users toolBox(UserRequest userRequest) throws EmptyFieldException, DuplicateFieldException, InvalidCharacterException,
             InvalidLengthException, InvalidPasswordException, InvalidEmailException, InvalidRolesException {
-        checkEmptyFields(users);
-        checkDuplicateUsername(users.getUsername());
-        checkDuplicateEmail(users.getEmail());
-        checkUsername(users.getUsername());
-        checkPassword(users.getPassword());
-        checkEmail(users.getEmail());
+        checkEmptyFields(userRequest);
+        checkDuplicateUsername(userRequest.getUsername());
+        checkDuplicateEmail(userRequest.getEmail());
+        checkUsername(userRequest.getUsername());
+        checkPassword(userRequest.getPassword());
+        checkEmail(userRequest.getEmail());
+        Users users = new Users(userRequest.getUsername(),userRequest.getEmail(),userRequest.getPassword());
         users = checkRoles(users);
-        users.setPassword(users.getPassword());
+//        userRequest.setPassword(userRequest.getPassword());
         return users;
     }
 
-    public void checkEmptyFields(Users users) throws EmptyFieldException {
-        if (users.getUsername().isEmpty()) {
+    public void checkEmptyFields(UserRequest userRequest) throws EmptyFieldException {
+        if (userRequest.getUsername().isEmpty()) {
             throw new EmptyFieldException("Username's field is empty!");
         }
-        if (users.getPassword().isEmpty()) {
+        if (userRequest.getPassword().isEmpty()) {
             throw new EmptyFieldException("Password's field is empty!");
         }
-        if (users.getEmail().isEmpty()) {
+        if (userRequest.getEmail().isEmpty()) {
             throw new EmptyFieldException("Email's field is empty!");
         }
     }
