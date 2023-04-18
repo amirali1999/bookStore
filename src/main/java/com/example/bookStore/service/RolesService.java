@@ -5,6 +5,7 @@ import com.example.bookStore.exception.type.NotFoundException;
 import com.example.bookStore.model.Roles;
 import com.example.bookStore.repository.RolesRepository;
 import com.example.bookStore.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class RolesService {
     private final RolesRepository rolesRepository;
     private final MessageSource messageSource;
@@ -24,6 +26,7 @@ public class RolesService {
 
     public Response getRoles(int page) {
         Page<Roles> pages = rolesRepository.findAll(PageRequest.of(page - 1, 10));
+        log.info("get all roles successfully");
         return new Response(HttpStatus.OK,
                 messageSource.getMessage("get.role.successfully",
                         null,
