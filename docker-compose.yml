@@ -8,12 +8,14 @@ services:
       - "8080:8080"
     depends_on:
       - db
+      - elasticsearch
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bookstore
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=9158961163
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_ELASTICSEARCH_HOST=http://elasticsearch:9200
   db:
     image: 'postgres:13.1-alpine'
     ports:
@@ -23,3 +25,19 @@ services:
       - POSTGRES_DB=bookstore
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=9158961163
+  kibana:
+    container_name: library_kibana
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    container_name: library_elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
