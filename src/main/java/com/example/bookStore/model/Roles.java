@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Table(name = "roles",schema = "public",catalog = "bookstore")
+@Table(name = "roles")
 @Entity
 @Getter
 @Setter
@@ -18,7 +18,7 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "name")
+    @Column(name = "name",nullable = false,unique = true)
     private String name;
     @Column(name = "description")
     private String description;

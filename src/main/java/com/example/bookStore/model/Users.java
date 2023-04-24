@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="users", schema = "public", catalog = "bookstore")
+@Table(name="users")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,11 +22,11 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "username")
+    @Column(name = "username",nullable = false,unique = true)
     private String username;
-    @Column(name = "email")
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )

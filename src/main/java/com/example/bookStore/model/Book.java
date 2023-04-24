@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Table(name = "book",schema = "public",catalog = "bookstore")
+@Table(name = "book")
 @Entity
 @Getter
 @Setter
@@ -19,15 +19,15 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "title")
+    @Column(name = "title",nullable = false,unique = true)
     private String title;
-    @Column(name = "author")
+    @Column(name = "author",nullable = false)
     private String author;
     @Column(name = "year_of_public")
     private int year_of_public;
     @Column(name = "publisher")
     private String publisher;
-    public Book(int isbn, String title, String author, int year_of_public, String publisher) {
+    public Book(String title, String author, int year_of_public, String publisher) {
         this.title = title;
         this.author = author;
         this.year_of_public = year_of_public;
