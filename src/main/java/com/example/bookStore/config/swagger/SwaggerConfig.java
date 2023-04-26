@@ -12,7 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.Collections;
 
 @Configuration
-public class SwaggerConfig {//https://medium.com/javarevisited/api-documentation-using-swagger-3-with-spring-boot-2-spring-security-5a0d2b0996ee
+public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo("Book Store",
                 "An api for a book store",
